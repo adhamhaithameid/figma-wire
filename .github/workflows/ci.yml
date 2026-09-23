@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  engine:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Engine tests (hermetic, offline)
+        run: bash engine/tests/run-tests.sh
+
+  figma-wire:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Unit tests (hermetic, offline)
+        run: SKIP_NETWORK_TESTS=1 bash tests/run-tests.sh
+        working-directory: skills/figma-wire
+      - name: Installer e2e (sandboxed HOME)
+        run: bash tests/e2e.sh
+        working-directory: skills/figma-wire

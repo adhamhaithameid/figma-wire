@@ -1,0 +1,52 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write   # create the GitHub Release
+  id-token: write   # npm provenance / OIDC trusted publishing
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Engine tests (hermetic, offline)
+        run: bash engine/tests/run-tests.sh
+
+      - name: figma-wire unit tests (hermetic, offline)
+        run: SKIP_NETWORK_TESTS=1 bash tests/run-tests.sh
+        working-directory: skills/figma-wire
+
+      - name: figma-wire installer e2e (sandboxed HOME)
+        run: bash tests/e2e.sh
+        working-directory: skills/figma-wire
+
+      # One-time setup (npmjs.com): mcp-wire package Settings -> Trusted Publisher
+      # -> repo adhamhaithameid/mcp-wire, workflow release.yml.
+      # Fallback: `gh secret set NPM_TOKEN` with a granular token, then uncomment:
+      - name: Publish the mcp-wire family package to npm (skips if version already on the registry)
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "mcp-wire@$VERSION" version > /dev/null 2>&1; then
+            echo "mcp-wire@$VERSION already on the registry — skipping publish"
+          else
+            npm publish --access public
+          fi
+        env:
+          NPM_CONFIG_PROVENANCE: true
+        # env:
+        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: GitHub Release with generated notes
+        uses: softprops/action-gh-release@v2
+        with:
+          generate-notes: true

@@ -1,0 +1,47 @@
+{
+  "name": "mcp-wire",
+  "version": "1.0.0",
+  "description": "One bash engine that speaks MCP, plus the agent skills built on it — figma-wire (your AI agent finally sees your Figma designs) and every upcoming x-wire skill. Install once, get both CLIs and all skills.",
+  "license": "MIT",
+  "author": "Adham Haitham <adhamhaithameid@users.noreply.github.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adhamhaithameid/mcp-wire.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "figma",
+    "claude",
+    "claude-code",
+    "cursor",
+    "codex",
+    "cli",
+    "bash",
+    "ai-agents",
+    "agent-skills",
+    "skills",
+    "design-to-code",
+    "developer-tools"
+  ],
+  "bin": {
+    "mcp-wire": "engine/mcp-wire.sh",
+    "figma-wire": "skills/figma-wire/scripts/figma-wire.sh"
+  },
+  "files": [
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "engine/",
+    "skills/",
+    "scripts/"
+  ],
+  "scripts": {
+    "test": "bash engine/tests/run-tests.sh && cd skills/figma-wire && SKIP_NETWORK_TESTS=1 bash tests/run-tests.sh && bash tests/e2e.sh"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "os": ["darwin", "linux"],
+  "preferGlobal": true
+}
