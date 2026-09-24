@@ -22,8 +22,8 @@ top of it.
 
 | Skill | What it wires into your agent | Install |
 |---|---|---|
-| **[figma-wire](skills/figma-wire)** | Figma — design context, screenshots, tokens, and a pixel-diff gate between the design and your build | `npm i -g mcp-wire` (both CLIs + all skills) |
-| **[mcp-wire](skills/mcp-wire)** | the engine itself as a skill — call any MCP server from plain bash, from any agent | `npm i -g mcp-wire` |
+| **[figma-wire](skills/figma-wire)** | Figma — design context, screenshots, tokens, and a pixel-diff gate between the design and your build | `npm i -g @adhamhaithameid/mcp-wire` (both CLIs + all skills) |
+| **[mcp-wire](skills/mcp-wire)** | the engine itself as a skill — call any MCP server from plain bash, from any agent | `npm i -g @adhamhaithameid/mcp-wire` |
 | *next skill — your idea here* | notion, linear, sheets, Jira… | roadmap |
 
 One engine, many skills: fix the engine once, and the release pipeline stamps the fix
@@ -58,7 +58,7 @@ first: wire any AI coding agent to Figma, repair broken MCP configs across 8 har
 and validate implementations against the design with pixel diffs.
 
 ```bash
-npm i -g mcp-wire && figma-wire doctor    # 30 seconds to a Figma-connected agent
+npm i -g @adhamhaithameid/mcp-wire && figma-wire doctor    # 30 seconds to a Figma-connected agent
 ```
 
 ## How the family works

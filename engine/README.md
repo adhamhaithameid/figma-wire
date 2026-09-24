@@ -10,7 +10,10 @@ This is the engine that powers the [mcp-wire skill family](../README.md); figma-
 ## Use
 
 ```bash
-# install the CLI (bin: `mcp-wire`) — single file, no npm required
+# install the CLI (bin: `mcp-wire`)
+npm i -g @adhamhaithameid/mcp-wire
+
+# or straight from the repo — single file, no npm required
 curl -fsSL https://raw.githubusercontent.com/adhamhaithameid/mcp-wire/main/engine/mcp-wire.sh -o /usr/local/bin/mcp-wire
 chmod +x /usr/local/bin/mcp-wire
 
@@ -18,11 +21,6 @@ engine/mcp-wire.sh <server-url> list                   # list the server's tools
 engine/mcp-wire.sh <server-url> call <tool> ['{json}'] # invoke a tool
 engine/mcp-wire.sh <server-url> raw '<jsonrpc-body>'   # raw JSON-RPC after handshake
 ```
-
-> An npm package (`@adhamhaithameid/mcp-wire`) is prepared but pending — npm's
-> new-package policy requires a TOTP-style authenticator on the account at first
-> publish, which this passkey-only account intentionally doesn't use. The GitHub
-> install above is fully supported and always current.
 
 | Flag | Purpose |
 |---|---|
